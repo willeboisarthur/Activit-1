@@ -7,7 +7,7 @@ const productRouter = require('./routes/product_router');
 const app = express();
 app.use(express.json());
 
-app.use('/product', productRouter);
+app.use('/', productRouter);
 
 const database = async () => {
     await connect();
