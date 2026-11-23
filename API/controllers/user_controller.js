@@ -14,7 +14,7 @@ exports.create = async (req,res,next) => {
             return res.status(400).json({ message: 'L\'utilisateur existe déjà'});
         }
 
-        const verifyRole = ['admin', 'user'];
+        const verifyRole = ['client', 'manager', 'admin'];
         if(!verifyRole.includes(role)) {
             return res.status(400).json({ message: 'Rôle invalide'});
         }

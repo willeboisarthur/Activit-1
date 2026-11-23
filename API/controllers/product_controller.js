@@ -11,8 +11,7 @@ exports.list = async (req,res,next) => {
 
 exports.create = async (req,res,next) => {
     try{
-        const product = await Product.create(req.body);
-        res.status(201).json({product});
+        const product = await Product.create({ ...req.body, created_by: req.user.id_user });
     }
     catch(err){
         if (err.name === 'SequelizeValidationError') {
@@ -43,7 +42,12 @@ exports.update = async (req, res) => {
             return res.status(404).json({ error: "Produit non trouvé." });
         }
 
-        const updatedProduct = await product.update(req.body);
+        if (req.user.role === 'manager' && product.created_by !== req.user.id_user) {
+            return res.status(403).json({ error: "Vous ne pouvez modifier que vos propres produits." });
+        }
+
+        const { created_by, ...data } = req.body;
+        const updatedProduct = await product.update(data);
         return res.status(200).json(updatedProduct);
     } catch (err) {
         if (err.name === 'SequelizeValidationError') {

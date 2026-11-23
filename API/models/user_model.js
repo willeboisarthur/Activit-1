@@ -23,9 +23,9 @@ const User = bdd.define('User', {
         defaultValue: DataTypes.NOW
     },
     role: {
-        type: DataTypes.ENUM('admin', 'user'),
+        type: DataTypes.ENUM('admin', 'manager','client'),
         allowNull: false,
-        defaultValue: 'user'
+        defaultValue: 'client'
     }
 });
 

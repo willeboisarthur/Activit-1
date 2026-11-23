@@ -5,9 +5,9 @@ const { requireRole } = require('../middleware/auth_middleware.js');
 const router = express.Router();
 
 router.get('/', productController.list);
-router.post('/', requireRole('admin'), productController.create);
 router.get('/:id', productController.getById);
+router.post('/', requireRole('manager', 'admin'), productController.create);
+router.patch('/:id', requireRole('manager', 'admin'), productController.update);
 router.delete('/:id', requireRole('admin'), productController.delete);
-router.patch('/:id', requireRole('admin'), productController.update);
 
-module.exports = router; 
+module.exports = router;
